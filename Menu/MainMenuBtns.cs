@@ -15,6 +15,8 @@ public class MainMenuBtns : MonoBehaviour
 
     public void OpenSettingMenu()
     {
+        ButtonClicked();
+        CanvasSwitcher.
         SwitchCanvasGroup(MainMenuManager.Instance.MainScreen, MainMenuManager.Instance.SettingScreen);
 
         Dictionary<string, float> settings = MainMenuManager.Instance.LoadSettings();
@@ -24,6 +26,8 @@ public class MainMenuBtns : MonoBehaviour
 
     public void CloseSettingMenu()
     {
+        ButtonClicked();
+        CanvasSwitcher.
         SwitchCanvasGroup(MainMenuManager.Instance.SettingScreen, MainMenuManager.Instance.MainScreen);
 
         MainMenuManager.Instance.SaveSettings();
@@ -31,22 +35,33 @@ public class MainMenuBtns : MonoBehaviour
 
     public void OpenCreditMenu()
     {
+        ButtonClicked();
+        CanvasSwitcher.
         SwitchCanvasGroup(MainMenuManager.Instance.MainScreen, MainMenuManager.Instance.CreditScreen);
     }
 
     public void CloseCreditMenu()
     {
+        ButtonClicked();
+        CanvasSwitcher.
         SwitchCanvasGroup(MainMenuManager.Instance.CreditScreen, MainMenuManager.Instance.MainScreen);
     }
 
     public void OpenTutorialMenu()
     {
+        ButtonClicked();
         _slideNum = 0;
+        CanvasSwitcher.
         SwitchCanvasGroup(MainMenuManager.Instance.MainScreen, MainMenuManager.Instance.TutorialScreen);
     }
 
     public void CloseTutorialMenu()
     {
+        ButtonClicked();
+        CanvasSwitcher.
+        SwitchCanvasGroup(MainMenuManager.Instance.TutorialSlides[_slideNum], MainMenuManager.Instance.TutorialSlides[0]);
+
+        CanvasSwitcher.
         SwitchCanvasGroup(MainMenuManager.Instance.TutorialScreen, MainMenuManager.Instance.MainScreen);
     }
 
@@ -67,20 +82,11 @@ public class MainMenuBtns : MonoBehaviour
      * Funzione per switchare l'apertura dei menu (impostazioni, crediti...) senza caricare 
      * nuove scene
      */
-    private void SwitchCanvasGroup(CanvasGroup canvaToClose, CanvasGroup canvaToOpen)
-    {
-        ButtonClicked();
-        canvaToClose.alpha = 0;
-        canvaToClose.interactable = false;
-        canvaToClose.blocksRaycasts = false;
-
-        canvaToOpen.alpha = 1;
-        canvaToOpen.interactable = true;
-        canvaToOpen.blocksRaycasts = true;
-    }
 
     public void NextTutorialSlide()
     {
+        ButtonClicked();
+        CanvasSwitcher.
         SwitchCanvasGroup(
                 MainMenuManager.Instance.TutorialSlides[_slideNum],
                 MainMenuManager.Instance.TutorialSlides[(_slideNum + 1) % 3]
@@ -90,6 +96,8 @@ public class MainMenuBtns : MonoBehaviour
 
     public void PreviousTutorialSlide()
     {
+        ButtonClicked();
+        CanvasSwitcher.
         SwitchCanvasGroup(
                 MainMenuManager.Instance.TutorialSlides[_slideNum],
                 MainMenuManager.Instance.TutorialSlides[_slideNum - 1 < 0 ? 2 : _slideNum - 1]
