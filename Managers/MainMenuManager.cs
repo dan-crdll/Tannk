@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
@@ -12,19 +13,24 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] CanvasGroup _mainScreen;
     [SerializeField] CanvasGroup _settingScreen;
     [SerializeField] CanvasGroup _creditScreen;
+    [SerializeField] CanvasGroup _tutorialScreen;
     [SerializeField] Slider _soundSlider;
     [SerializeField] Slider _musicSlider;
     [SerializeField] AudioSource _bgMusicSource;
     [SerializeField] AudioSource _soundEffectSource;
     [SerializeField] TextMeshProUGUI _scoreText;
+
+    [SerializeField] CanvasGroup[] _tutorialSlides;
     public CanvasGroup MainScreen { get { return _mainScreen; }  }
     public CanvasGroup SettingScreen { get { return _settingScreen; } }
     public CanvasGroup CreditScreen { get { return _creditScreen; } }
+    public CanvasGroup TutorialScreen { get { return _tutorialScreen; } }
     public Slider SoundSlider { get { return _soundSlider; } }
     public Slider MusicSlider { get { return _musicSlider; } }
     public AudioSource BackgroundMusicSource { get { return _bgMusicSource; } }
     public AudioSource SoundEffectSource { get { return _soundEffectSource; } }
     public TextMeshProUGUI ScoreText { get { return _scoreText; } }
+    public CanvasGroup[] TutorialSlides { get { return _tutorialSlides; } }
 
     private void Awake()
     {
@@ -80,5 +86,10 @@ public class MainMenuManager : MonoBehaviour
         };
 
         return settings;
+    }
+
+    public void LoadGame()
+    {
+        SceneManager.LoadScene(1);
     }
 }
