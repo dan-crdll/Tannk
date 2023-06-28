@@ -19,6 +19,8 @@ public class MainMenuBtns : MonoBehaviour
         CanvasSwitcher.
         SwitchCanvasGroup(MainMenuManager.Instance.MainScreen, MainMenuManager.Instance.SettingScreen);
 
+        MainMenuManager.Instance.StartCoroutine(MainMenuManager.Instance.UpdateVolume());
+
         Dictionary<string, float> settings = MainMenuManager.Instance.LoadSettings();
         MainMenuManager.Instance.MusicSlider.value = settings["music"] != -1 ? settings["music"] : 1;
         MainMenuManager.Instance.SoundSlider.value = settings["sound"] != -1 ? settings["sound"] : 1;
@@ -29,6 +31,8 @@ public class MainMenuBtns : MonoBehaviour
         ButtonClicked();
         CanvasSwitcher.
         SwitchCanvasGroup(MainMenuManager.Instance.SettingScreen, MainMenuManager.Instance.MainScreen);
+
+        MainMenuManager.Instance.StopCoroutine(MainMenuManager.Instance.UpdateVolume());
 
         MainMenuManager.Instance.SaveSettings();
     }

@@ -77,6 +77,16 @@ public class MainMenuManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public IEnumerator UpdateVolume()
+    {
+        while(true)
+        {
+            BackgroundMusicSource.volume = MusicSlider.value;
+            SoundEffectSource.volume = SoundSlider.value;
+            yield return 0;
+        }
+    }
+
     public Dictionary<string, float> LoadSettings()
     {
         Dictionary<string, float> settings = new Dictionary<string, float>()

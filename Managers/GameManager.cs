@@ -24,9 +24,12 @@ public class GameManager : MonoBehaviour
     {
         if(scene.buildIndex == 1)
         {
+            Cursor.visible = false;
             PlayerManager.Instance.InstantiatePlayer();
             SpawnManager.Instance.Spawn<Player>(PlayerManager.Instance.Player);
         }
     }
+
+    public void GameOver() { }
 
 }

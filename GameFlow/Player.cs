@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,19 @@ public class Player : MonoBehaviour, ICharacter
     [SerializeField] AudioSource cannonShootAudioSource;
     [SerializeField] ParticleSystem GroundShootParticle;
 
-
-    public float mouseSensitivity = 5;
-    private float rightLeftRotation = 0.0f;
-
     ParticleSystem _groundShootParticle;
 
+    public float reloadTime = 1f;
+
+    public float Sensitivity
+    {
+        get { return sensitivity; }
+        set { sensitivity = value; }
+    }
+    [Range(0.1f, 9f)][SerializeField] float sensitivity = 2f;
+
+    Vector2 rotation = Vector2.zero;
+    const string xAxis = "Mouse X";
 
     private void Start()
     {
@@ -27,12 +35,14 @@ public class Player : MonoBehaviour, ICharacter
         _groundShootParticle = Instantiate(GroundShootParticle);
     }
 
+
     private void Update()
     {
-        Vector3 newRotation = new Vector3(0, rightLeftRotation, 0);
-        rightLeftRotation += Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        newRotation = new Vector3(0, rightLeftRotation, 0);
-        cannonHead.localRotation = Quaternion.Euler(newRotation);
+        rotation.x += Input.GetAxis(xAxis) * sensitivity;
+
+        var xQuat = Quaternion.AngleAxis(rotation.x, Vector3.up);
+
+        cannonHead.localRotation = xQuat;
     }
 
     private IEnumerator UpdateCoroutine()
@@ -52,7 +62,7 @@ public class Player : MonoBehaviour, ICharacter
         {
             if(Input.GetMouseButtonDown(0))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
                 RaycastHit hit;
                 if(Physics.Raycast(ray, out hit))
                 {
@@ -84,7 +94,7 @@ public class Player : MonoBehaviour, ICharacter
             }
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(reloadTime);
         _groundShootParticle.Stop();
         _groundShootParticle.gameObject.SetActive(false);
     }

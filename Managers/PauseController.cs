@@ -12,6 +12,7 @@ public class PauseController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             inPause = !inPause;
+            Cursor.visible = inPause;
             CanvasSwitcher.ToggleCanvasGroup(pauseScreen, inPause);
             if(inPause)
             {
@@ -35,6 +36,7 @@ public class PauseController : MonoBehaviour
 
     public void OnMainMenuBtn()
     {
+        Cursor.visible = true;
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }

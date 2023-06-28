@@ -8,16 +8,19 @@ public class SpawnManager : MonoBehaviour
     public static SpawnManager Instance { get { return _instance; } }
 
     [SerializeField] private Transform[] _enemySpawnPoints;
+    [SerializeField] private Transform[] _powerUpsSpawnPoints;
     [SerializeField] private Transform _playerSpawnPoint;
 
     public Transform[] EnemySpawnPoints { get { return _enemySpawnPoints; } }
     public Transform PlayerSpawnPoint { get { return _playerSpawnPoint; } }
+    public Transform[] PowerUpSpawnPoints { get { return _powerUpsSpawnPoints; } }
 
     private delegate void SpawnFunction(GameObject gameObject);
     private Dictionary<System.Type, SpawnFunction> _spawnDict = new Dictionary<System.Type, SpawnFunction>()
     {
-        {typeof(Player), (SpawnFunction)SpawnPlayer },
-        {typeof(Enemy), (SpawnFunction)SpawnEnemy }
+        {typeof(Player), SpawnPlayer },
+        {typeof(Enemy), SpawnEnemy },
+        {typeof(PowerUp), SpawnPowerUp },
     };
 
     private void Awake()
@@ -45,5 +48,12 @@ public class SpawnManager : MonoBehaviour
         Transform spawnPoint = SpawnManager.Instance.EnemySpawnPoints[Random.Range(0, SpawnManager.Instance.EnemySpawnPoints.Length)];
 
         enemy.transform.SetSpawnCoordinates(spawnPoint);
+    }
+
+    private static void SpawnPowerUp(GameObject powerUp)
+    {
+        Transform spawnPoint = SpawnManager.Instance.PowerUpSpawnPoints[Random.Range(0, SpawnManager.Instance.PowerUpSpawnPoints.Length)];
+        
+        powerUp.transform.SetSpawnCoordinates(spawnPoint);
     }
 }
